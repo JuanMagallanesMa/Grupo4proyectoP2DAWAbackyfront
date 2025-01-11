@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Data.Models
@@ -16,6 +17,8 @@ namespace Data.Models
         public string Role { get; set; } 
         public bool IsAviable { get; set; }
 
+
+        [JsonIgnore]
         public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }
