@@ -100,6 +100,66 @@ namespace apiPartyStore.Controllers
             return NoContent();
         }
 
+        // api/Orders/desactive/5
+        [HttpPut("desactive/{id}")]
+        public async Task<IActionResult> DesactiveOrder(int id)
+        {
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound("Order no encontrada para eliminar");
+            }
+
+            order.isActive = false;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+        //buscar con usuario o id de orden
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Order>>> SearchOrders(string? userName, int? idOrder )
+        {
+            var ordersQuery = _context.Orders.Include(o => o.User)
+                .Where(o => o.isActive)
+                .AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(userName))
+            {
+                ordersQuery = ordersQuery.Where(o => o.User.Name.Contains(userName));
+            }
+
+            if (idOrder > 0)
+            {
+                ordersQuery = ordersQuery.Where(o => o.Id==idOrder);
+            }
+
+            var orders = await ordersQuery.ToListAsync();
+            if (!orders.Any())
+            {
+                return NotFound("No se encontraron Ordenes con esos criterios");
+            }
+            return Ok(orders);
+        }
+
+
+
+
         private bool OrderExists(int id)
         {
             return _context.Orders.Any(e => e.Id == id);

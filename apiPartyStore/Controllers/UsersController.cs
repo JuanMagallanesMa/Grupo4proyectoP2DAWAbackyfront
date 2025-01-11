@@ -100,6 +100,68 @@ namespace apiPartyStore.Controllers
             return NoContent();
         }
 
+        //Eliminar logicamente
+        [HttpPut("desactive/{id}")]
+        public async Task<IActionResult> DesactiveUser(int id)
+        {
+            var user = await _context.Users.FindAsync(id);
+            if (user == null)
+            {
+                return NotFound("User no encontrado para eliminar");
+            }
+
+            user.IsAviable = false;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!UserExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        //buscar usuarios por nombre, id o correo
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<User>>> SearchUser(string? name, int? idUsuario, string? correo)
+        {
+            var userQuery = _context.Users
+                .Where(u => u.IsAviable)
+                .AsQueryable();
+
+
+            if (!string.IsNullOrEmpty(name))
+            {
+                userQuery = userQuery.Where(u => u.Name.Contains(name));
+            }
+            if (!string.IsNullOrEmpty(correo))
+            {
+                userQuery = userQuery.Where(u => u.Email.Contains(correo));
+            }
+            if (idUsuario > 0)
+            {
+                userQuery = userQuery.Where(u => u.Id == idUsuario);
+            }
+
+            var users = await userQuery.ToListAsync();
+            if (!users.Any())
+            {
+                return NotFound("No se encontraron Users con esos criterios");
+            }
+            return Ok(users);
+        }
+
+
         private bool UserExists(int id)
         {
             return _context.Users.Any(e => e.Id == id);

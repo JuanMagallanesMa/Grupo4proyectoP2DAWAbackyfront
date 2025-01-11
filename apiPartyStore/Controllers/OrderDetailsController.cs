@@ -25,7 +25,9 @@ namespace apiPartyStore.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDetail>>> GetOrderDetails()
         {
-            return await _context.OrderDetails.ToListAsync();
+            return await _context.OrderDetails.Include(od=>od.Order)
+                .Where(od => od.isActive)
+                .ToListAsync();
         }
 
         // GET: api/OrderDetails/5
@@ -104,9 +106,9 @@ namespace apiPartyStore.Controllers
         public async Task<IActionResult> DesactiveOrderDetail(int id)
         {
             var orderDetail = await _context.OrderDetails.FindAsync(id);
-            if (id != orderDetail.Id)
+            if (orderDetail == null)
             {
-                return BadRequest();
+                return NotFound("OrderDetail no encontrada para eliminar");
             }
 
             orderDetail.isActive = false;
