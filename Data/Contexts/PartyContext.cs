@@ -13,6 +13,7 @@ namespace Data.Contexts
         //Agregar las clases para la BD
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
+        public DbSet<User> Users { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -20,13 +21,17 @@ namespace Data.Contexts
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            
-            modelBuilder.Entity<Movie>()
-                .HasOne(m => m.Genre) //Esto indica que Movie tiene una propiedad de navegación llamada Genre que apunta a una única entidad Genre.
-                .WithMany(g => g.Movies) //Aquí defines que Genre tiene una colección de películas (Movies) como propiedad de navegación.
-                .HasForeignKey(m => m.GenreId);//Indica que la relación se establece mediante una clave foránea en la tabla Movie.
+            //Relacion OrderDetail con Order
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(od => od.Order) 
+                .WithMany(o => o.OrderDetails) 
+                .HasForeignKey(od => od.OrderId);
+            //Relacion Order con User
+            modelBuilder.Entity<Order>()
+                .HasOne(o=>o.User)
+                .WithMany(u=>u.Orders)
+                .HasForeignKey(o => o.UserId);
 
-            
             base.OnModelCreating(modelBuilder);
         }
 
