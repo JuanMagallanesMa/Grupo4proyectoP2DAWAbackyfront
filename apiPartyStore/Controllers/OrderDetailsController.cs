@@ -99,7 +99,36 @@ namespace apiPartyStore.Controllers
 
             return NoContent();
         }
+        //Eliminacion logica
+        [HttpPut("desactive/{id}")]
+        public async Task<IActionResult> DesactiveOrderDetail(int id)
+        {
+            var orderDetail = await _context.OrderDetails.FindAsync(id);
+            if (id != orderDetail.Id)
+            {
+                return BadRequest();
+            }
 
+            orderDetail.isActive = false;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!OrderDetailExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
         private bool OrderDetailExists(int id)
         {
             return _context.OrderDetails.Any(e => e.Id == id);
