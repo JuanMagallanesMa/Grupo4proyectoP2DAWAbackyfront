@@ -39,11 +39,7 @@ namespace Data.Contexts
                 .HasOne(o=>o.User)
                 .WithMany(u=>u.Orders)
                 .HasForeignKey(o => o.UserId);
-            //Relacion Producto con OrderDetail
-            modelBuilder.Entity<Product>()
-                .HasOne(p => p.OrderDetails)
-                .WithMany(od => od.Product)
-                .HasForeignKey(od =>od.ProductId);
+            
 
 
             base.OnModelCreating(modelBuilder);
