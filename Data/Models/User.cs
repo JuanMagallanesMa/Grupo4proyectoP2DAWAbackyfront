@@ -14,11 +14,10 @@ namespace Data.Models
         public string Email { get; set; }
         public string Password { get; set; }
         public string Telephone { get; set; }
-        public string Role { get; set; } 
+        public string Role { get; set; }
         public bool IsAviable { get; set; }
 
-
-        [JsonIgnore]
-        public virtual ICollection<Order> Orders { get; set; } 
+        //[JsonIgnore]
+        //public virtual ICollection<Order> Orders { get; set; } = new List<Order>();
     }
 }

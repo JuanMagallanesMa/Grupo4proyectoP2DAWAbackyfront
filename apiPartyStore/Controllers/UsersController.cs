@@ -13,7 +13,7 @@ namespace apiPartyStore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAngularApp")]
+    
     public class UsersController : ControllerBase
     {
         private readonly PartyContext _context;
@@ -27,7 +27,9 @@ namespace apiPartyStore.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<User>>> GetUsers()
         {
-            return await _context.Users.ToListAsync();
+            return await _context.Users
+                .Where(od => od.IsAviable)
+                .ToListAsync();
         }
 
         // GET: api/Users/5
@@ -80,9 +82,9 @@ namespace apiPartyStore.Controllers
         [HttpPost]
         public async Task<ActionResult<User>> PostUser(User user)
         {
-            _context.Users.Add(user);
+             _context.Users.Add(user);
             await _context.SaveChangesAsync();
-
+            
             return CreatedAtAction("GetUser", new { id = user.Id }, user);
         }
 

@@ -13,7 +13,7 @@ namespace apiPartyStore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAngularApp")]
+    
     public class OrderDetailsController : ControllerBase
     {
         private readonly PartyContext _context;
@@ -28,7 +28,7 @@ namespace apiPartyStore.Controllers
         public async Task<ActionResult<IEnumerable<OrderDetail>>> GetOrderDetails()
         {
             return await _context.OrderDetails
-                .Include(od=>od.Order.User)
+                .Include(od=>od.Order.Name)
                 .Where(od => od.isActive)
                 .ToListAsync();
         }

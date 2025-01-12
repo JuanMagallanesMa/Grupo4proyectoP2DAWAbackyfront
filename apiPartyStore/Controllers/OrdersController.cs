@@ -13,7 +13,7 @@ namespace apiPartyStore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [EnableCors("AllowAngularApp")]
+    
     public class OrdersController : ControllerBase
     {
         private readonly PartyContext _context;
@@ -27,7 +27,7 @@ namespace apiPartyStore.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Order>>> GetOrders()
         {
-            return await _context.Orders.Include(od => od.User)
+            return await _context.Orders
                 .Where(od => od.isActive)
                 .ToListAsync();
         }
@@ -138,14 +138,14 @@ namespace apiPartyStore.Controllers
         [HttpGet("search")]
         public async Task<ActionResult<IEnumerable<Order>>> SearchOrders(string? userName, int? idOrder )
         {
-            var ordersQuery = _context.Orders.Include(o => o.User)
+            var ordersQuery = _context.Orders
                 .Where(o => o.isActive)
                 .AsQueryable();
 
 
             if (!string.IsNullOrEmpty(userName))
             {
-                ordersQuery = ordersQuery.Where(o => o.User.Name.Contains(userName));
+                ordersQuery = ordersQuery.Where(o => o.Name.Contains(userName));
             }
 
             if (idOrder > 0)

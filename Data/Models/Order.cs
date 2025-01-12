@@ -10,8 +10,8 @@ namespace Data.Models
     public class Order
     {
         public int Id { get; set; }
-        public int UserId { get; set; }
-        public User User { get; set; }
+        //public int UserId { get; set; }
+        //public virtual User User { get; set; } = null!;
         public string Name { get; set; }
         public string Cedula { get; set; }
         public string Telefono { get; set; }
@@ -25,6 +25,6 @@ namespace Data.Models
         
 
         [JsonIgnore]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; } 
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }
