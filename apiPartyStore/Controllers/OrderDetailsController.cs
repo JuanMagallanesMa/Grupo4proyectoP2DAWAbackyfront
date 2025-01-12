@@ -25,7 +25,8 @@ namespace apiPartyStore.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<OrderDetail>>> GetOrderDetails()
         {
-            return await _context.OrderDetails.Include(od=>od.Order)
+            return await _context.OrderDetails
+                .Include(od=>od.Order.User)
                 .Where(od => od.isActive)
                 .ToListAsync();
         }

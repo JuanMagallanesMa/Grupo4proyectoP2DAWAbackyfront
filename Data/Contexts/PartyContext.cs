@@ -10,6 +10,8 @@ namespace Data.Contexts
 {
     public class PartyContext : DbContext
     {
+        public PartyContext(DbContextOptions<PartyContext> options): base(options)
+        { }
 
         //Agregar las clases para la BD
         public DbSet<Order> Orders { get; set; }

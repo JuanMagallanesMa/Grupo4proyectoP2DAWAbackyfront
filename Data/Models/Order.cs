@@ -13,12 +13,17 @@ namespace Data.Models
         public int UserId { get; set; }
         public User User { get; set; }
         public string Name { get; set; }
+        public string Cedula { get; set; }
+        public string Telefono { get; set; }
+        public string Address { get; set; }
+        public string Provincia { get; set; }
+
         public bool isActive { get; set; }
 
 
         
 
         [JsonIgnore]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; } 
     }
 }
