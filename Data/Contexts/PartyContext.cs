@@ -17,10 +17,10 @@ namespace Data.Contexts
         public DbSet<Order> Orders { get; set; }
         public DbSet<OrderDetail> OrderDetails { get; set; }
         public DbSet<User> Users { get; set; }
-
+        public DbSet<Product> Products { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("Server=localhost;Database=partystordb;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=partystoredb;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -29,6 +29,11 @@ namespace Data.Contexts
                 .HasOne(od => od.Order) 
                 .WithMany(o => o.OrderDetails) 
                 .HasForeignKey(od => od.OrderId);
+            //Relacion OrderDetail con Product
+            modelBuilder.Entity<OrderDetail>()
+                .HasOne(od => od.Product)
+                .WithMany(p => p.OrderDetails)
+                .HasForeignKey(od => od.ProductId);
             //Relacion Order con User
             modelBuilder.Entity<Order>()
                 .HasOne(o=>o.User)

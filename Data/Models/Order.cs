@@ -17,6 +17,7 @@ namespace Data.Models
         public string Telefono { get; set; }
         public string Address { get; set; }
         public string Provincia { get; set; }
+        public decimal Total { get; set; }
 
         public bool isActive { get; set; }
 
