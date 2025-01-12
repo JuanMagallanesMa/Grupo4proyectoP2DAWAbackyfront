@@ -7,11 +7,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Data.Contexts;
 using Data.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace apiPartyStore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [EnableCors("AllowAngularApp")]
     public class UsersController : ControllerBase
     {
         private readonly PartyContext _context;
