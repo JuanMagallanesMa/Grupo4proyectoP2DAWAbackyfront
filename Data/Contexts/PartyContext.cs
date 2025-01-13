@@ -34,9 +34,11 @@ namespace Data.Contexts
                 .HasOne(od => od.Product)
                 .WithMany(p => p.OrderDetails)
                 .HasForeignKey(od => od.ProductId);
-           
-            
-
+            //Rekacion Product con Category
+            modelBuilder.Entity<Product>()
+                .HasOne(p => p.Category)
+                .WithMany(c => c.Products)
+                .HasForeignKey(p => p.CategoryId);
 
             base.OnModelCreating(modelBuilder);
         }
