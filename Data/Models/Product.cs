@@ -20,5 +20,6 @@ namespace Data.Models
         [JsonIgnore]
         public virtual Category Category { get; set; } = null!;
 
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = null!;
     }
 }
