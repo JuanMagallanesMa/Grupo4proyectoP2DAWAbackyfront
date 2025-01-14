@@ -16,10 +16,9 @@ namespace Data.Models
         public string Imagen { get; set; } = string.Empty;
         public int CategoryId { get; set; }
         public bool IsActive { get; set; }
-
-        [JsonIgnore]
         public virtual Category Category { get; set; } = null!;
-
+        
+        [JsonIgnore]
         public virtual ICollection<OrderDetail> OrderDetails { get; set; } = null!;
     }
 }

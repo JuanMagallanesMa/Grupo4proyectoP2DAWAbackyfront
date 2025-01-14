@@ -25,7 +25,9 @@ namespace apiPartyStore.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products
+                .Where(p => p.IsActive)
+                .ToListAsync();
         }
 
         // GET: api/Product/5
@@ -34,7 +36,7 @@ namespace apiPartyStore.Controllers
         {
             var product = await _context.Products.FindAsync(id);
 
-            if (product == null)
+            if (product == null || !product.IsActive)
             {
                 return NotFound();
             }
@@ -78,6 +80,7 @@ namespace apiPartyStore.Controllers
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
         {
+            product.IsActive = true;
             _context.Products.Add(product);
             await _context.SaveChangesAsync();
 
@@ -98,6 +101,58 @@ namespace apiPartyStore.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        //PUT: api/Product/deactivate/5
+        [HttpPut("deactivate/{id}")]
+        public async Task<IActionResult> DeactivateProduct(int id)
+        {
+            var product = await _context.Products.FindAsync(id);
+            if (product == null)
+            {
+            return NotFound("Producto no encontrado para desactivar");
+            }
+
+            product.IsActive = false;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if(!ProductExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // GET: api/Product/search
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Product>>> SearchProducts(string? nombrecategory, int? idProduct)
+        {
+            var productsQuery = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrEmpty(nombrecategory))
+            {
+                productsQuery = productsQuery.Where(p => p.Nombre.Contains(nombrecategory));
+            }
+
+            var products = await productsQuery.ToListAsync();
+
+            if (!products.Any())
+            {
+                return NotFound("No se encontraron productos con esos criterios");
+            }
+
+            return Ok(products);
         }
 
         private bool ProductExists(int id)
