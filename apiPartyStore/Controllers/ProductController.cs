@@ -7,29 +7,28 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Data.Contexts;
 using Data.Models;
-using System.Reflection;
 
 namespace apiPartyStore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ProductsController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private readonly PartyContext _context;
 
-        public ProductsController(PartyContext context)
+        public ProductController(PartyContext context)
         {
             _context = context;
         }
 
-        // GET: api/Products
+        // GET: api/Product
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
             return await _context.Products.ToListAsync();
         }
 
-        // GET: api/Products/5
+        // GET: api/Product/5
         [HttpGet("{id}")]
         public async Task<ActionResult<Product>> GetProduct(int id)
         {
@@ -43,7 +42,7 @@ namespace apiPartyStore.Controllers
             return product;
         }
 
-        // PUT: api/Products/5
+        // PUT: api/Product/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutProduct(int id, Product product)
@@ -52,6 +51,7 @@ namespace apiPartyStore.Controllers
             {
                 return BadRequest();
             }
+
             _context.Entry(product).State = EntityState.Modified;
 
             try
@@ -73,7 +73,7 @@ namespace apiPartyStore.Controllers
             return NoContent();
         }
 
-        // POST: api/Products
+        // POST: api/Product
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         public async Task<ActionResult<Product>> PostProduct(Product product)
@@ -84,7 +84,7 @@ namespace apiPartyStore.Controllers
             return CreatedAtAction("GetProduct", new { id = product.Id }, product);
         }
 
-        // DELETE: api/Products/5
+        // DELETE: api/Product/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteProduct(int id)
         {
