@@ -21,7 +21,7 @@ namespace Data.Contexts
         public DbSet<Category> Categories { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer("DefaultConnection");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=partystoredb;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
