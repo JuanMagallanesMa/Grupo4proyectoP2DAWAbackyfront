@@ -10,6 +10,7 @@ using Data.Models;
 
 namespace apiPartyStore.Controllers
 {
+    //http://localhost:4200/api/Product
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
@@ -25,7 +26,9 @@ namespace apiPartyStore.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
         {
-            return await _context.Products.ToListAsync();
+            return await _context.Products.Include(p=>p.Category)
+                .Where(p=>p.IsActive==true)
+                .ToListAsync();
         }
 
         // GET: api/Product/5
@@ -34,7 +37,7 @@ namespace apiPartyStore.Controllers
         {
             var product = await _context.Products.FindAsync(id);
 
-            if (product == null || !product.IsActive)
+            if (product == null)
             {
                 return NotFound();
             }
@@ -134,13 +137,21 @@ namespace apiPartyStore.Controllers
 
         // GET: api/Product/search
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<Product>>> SearchProducts(string? nombrecategory, int? idProduct)
+        public async Task<ActionResult<IEnumerable<Product>>> SearchProducts(string? nombrecategory, int? idCategory)
         {
-            var productsQuery = _context.Products.AsQueryable();
+            var productsQuery = _context.Products.Include(p => p.Category)
+                .Where(p=>p.IsActive)
+                .AsQueryable();
+          
 
             if (!string.IsNullOrEmpty(nombrecategory))
             {
                 productsQuery = productsQuery.Where(p => p.Nombre.Contains(nombrecategory));
+            }
+
+            if (idCategory>0)
+            {
+               productsQuery = productsQuery.Where(p=>p.CategoryId == idCategory);
             }
 
             var products = await productsQuery.ToListAsync();
