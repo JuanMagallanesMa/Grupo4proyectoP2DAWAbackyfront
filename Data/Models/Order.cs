@@ -10,8 +10,7 @@ namespace Data.Models
     public class Order
     {
         public int Id { get; set; }
-        //public int UserId { get; set; }
-        //public virtual User User { get; set; } = null!;
+       
         public string Name { get; set; }
         public string Cedula { get; set; }
         public string Telefono { get; set; }
