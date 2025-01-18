@@ -19,6 +19,8 @@ namespace Data.Contexts
         public DbSet<User> Users { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<Category> Categories { get; set; }
+
+        public DbSet<Promociones> Promotions { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=localhost;Database=partystoredb;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
@@ -40,6 +42,12 @@ namespace Data.Contexts
                 .HasOne(p => p.Category)
                 .WithMany(c => c.Products)
                 .HasForeignKey(p => p.CategoryId);
+            //Relacion Promociones con Category
+
+            modelBuilder.Entity<Promociones>()
+                .HasOne(p =>p.Categoria)
+                .WithMany(c => c.Promociones)
+                .HasForeignKey(p => p.Id_categoria);
 
             base.OnModelCreating(modelBuilder);
         }

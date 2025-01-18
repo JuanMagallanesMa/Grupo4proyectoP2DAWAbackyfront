@@ -4,6 +4,7 @@ using Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(PartyContext))]
-    partial class PartyContextModelSnapshot : ModelSnapshot
+    [Migration("20250118230736_addPromociones")]
+    partial class addPromociones
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -158,6 +161,9 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int?>("CategoriaId")
+                        .HasColumnType("int");
+
                     b.Property<string>("Descripcion")
                         .HasColumnType("nvarchar(max)");
 
@@ -178,9 +184,9 @@ namespace Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("Id_categoria");
+                    b.HasIndex("CategoriaId");
 
-                    b.ToTable("Promotions");
+                    b.ToTable("Promociones");
                 });
 
             modelBuilder.Entity("Data.Models.User", b =>
@@ -253,7 +259,7 @@ namespace Data.Migrations
                 {
                     b.HasOne("Data.Models.Category", "Categoria")
                         .WithMany("Promociones")
-                        .HasForeignKey("Id_categoria");
+                        .HasForeignKey("CategoriaId");
 
                     b.Navigation("Categoria");
                 });
