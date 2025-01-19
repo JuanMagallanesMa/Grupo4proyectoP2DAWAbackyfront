@@ -21,9 +21,9 @@ namespace Data.Models
         public bool isActive { get; set; }
 
 
-        
+
 
         [JsonIgnore]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = null!;
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }
