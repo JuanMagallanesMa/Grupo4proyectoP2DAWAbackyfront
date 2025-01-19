@@ -13,7 +13,7 @@ namespace Data.Models
         public string? Descripcion { get; set; }
 
         public int? Id_categoria { get; set; }
-        public Category? Categoria { get; set; } // Navegación a la entidad Categoria
+        public virtual Category? Categoria { get; set; } = null!; // Navegación a la entidad Categoria
        
         public decimal Descuento_porcentaje { get; set; }
         
