@@ -15,5 +15,7 @@ namespace Data.Models
        
         [JsonIgnore]
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
+        [JsonIgnore]
+        public virtual ICollection<Promociones> Promociones { get; set; } = new List<Promociones>();
     }
 }
