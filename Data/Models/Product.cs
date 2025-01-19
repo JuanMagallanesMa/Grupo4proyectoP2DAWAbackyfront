@@ -24,6 +24,6 @@ namespace Data.Models
         public decimal Stock { get; set; }
         
         [JsonIgnore]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = null!;
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }
