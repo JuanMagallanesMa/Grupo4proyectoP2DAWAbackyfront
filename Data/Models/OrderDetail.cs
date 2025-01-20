@@ -11,13 +11,13 @@ namespace Data.Models
     {
         public int Id { get; set; }
         public int OrderId { get; set; }
-        [JsonIgnore]
+        
         public virtual Order? Order { get; set; } = null!;
         public int ProductId { get; set; }
-        [JsonIgnore]
+        
         public virtual Product? Product { get; set; } = null!;
         public int Cantidad { get; set; }
-        public int Subtotal { get; set; }
+        public decimal Subtotal { get; set; }
         public bool isActive { get; set; }
 
     }
