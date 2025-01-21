@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Data.Models
@@ -10,11 +11,13 @@ namespace Data.Models
     {
         public int Id { get; set; }
         public int OrderId { get; set; }
-        public virtual Order Order { get; set; }
+        
+        public virtual Order? Order { get; set; } = null!;
         public int ProductId { get; set; }
-        public virtual Product Product { get; set; }
+        
+        public virtual Product? Product { get; set; } = null!;
         public int Cantidad { get; set; }
-        public int Subtotal { get; set; }
+        public decimal Subtotal { get; set; }
         public bool isActive { get; set; }
 
     }
