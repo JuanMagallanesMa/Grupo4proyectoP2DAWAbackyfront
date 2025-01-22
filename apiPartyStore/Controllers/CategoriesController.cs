@@ -44,7 +44,6 @@ namespace ApiPartyStore.Controllers
             return category;
         }
 
-        // PUT: api/Categories/5
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategory(int id, Category category)
         {
@@ -53,6 +52,7 @@ namespace ApiPartyStore.Controllers
                 return BadRequest();
             }
 
+            // No necesitas asignar el Id manualmente, solo actualizar los campos necesarios
             _context.Entry(category).State = EntityState.Modified;
 
             try
@@ -74,15 +74,35 @@ namespace ApiPartyStore.Controllers
             return NoContent();
         }
 
-        // POST: api/Categories
-        [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
-        {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction(nameof(GetCategory), new { id = category.Id }, category);
-        }
+        [HttpPost]
+[HttpPost]
+public async Task<IActionResult> CrearCategoria([FromBody] Category categoriaRequest)
+{
+    if (categoriaRequest == null)
+    {
+        return BadRequest();
+    }
+
+    // No asignamos el 'id' manualmente, EF lo asignará automáticamente
+    var categoria = new Category
+    {
+        Nombre = categoriaRequest.Nombre,
+        Descripcion = categoriaRequest.Descripcion,
+        Estado = categoriaRequest.Estado,
+        EdadesAplicables = categoriaRequest.EdadesAplicables,
+        TiposEvento = categoriaRequest.TiposEvento
+    };
+
+    _context.Categories.Add(categoria);
+    await _context.SaveChangesAsync();
+
+    return CreatedAtAction(nameof(GetCategories), new { id = categoria.Id }, categoria);
+}
+
+
+
+
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
@@ -176,9 +196,5 @@ namespace ApiPartyStore.Controllers
         {
             return _context.Categories.Any(e => e.Id == id);
         }
-
-
-
-
     }
 }
