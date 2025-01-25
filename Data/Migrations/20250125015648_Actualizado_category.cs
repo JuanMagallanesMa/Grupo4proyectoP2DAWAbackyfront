@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace Data.Migrations
 {
     /// <inheritdoc />
-    public partial class PruebaDtabase : Migration
+    public partial class Actualizado_category : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,22 +20,50 @@ namespace Data.Migrations
                 table: "Orders");
 
             migrationBuilder.DropColumn(
-                name: "Categoria",
-                table: "Products");
-
-            migrationBuilder.DropColumn(
                 name: "UserId",
                 table: "Orders");
 
-            migrationBuilder.RenameColumn(
-                name: "IsAviable",
+            migrationBuilder.AddColumn<int>(
+                name: "CategoryId",
                 table: "Products",
-                newName: "IsActive");
+                type: "int",
+                nullable: false,
+                defaultValue: 0);
 
-            migrationBuilder.RenameColumn(
-                name: "CantidadVenta",
+            migrationBuilder.AddColumn<string>(
+                name: "Descripcion",
                 table: "Products",
-                newName: "CategoryId");
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<string>(
+                name: "Imagen",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<bool>(
+                name: "IsActive",
+                table: "Products",
+                type: "bit",
+                nullable: false,
+                defaultValue: false);
+
+            migrationBuilder.AddColumn<string>(
+                name: "Nombre",
+                table: "Products",
+                type: "nvarchar(max)",
+                nullable: false,
+                defaultValue: "");
+
+            migrationBuilder.AddColumn<decimal>(
+                name: "Precio",
+                table: "Products",
+                type: "decimal(18,2)",
+                nullable: false,
+                defaultValue: 0m);
 
             migrationBuilder.AddColumn<decimal>(
                 name: "Stock",
@@ -44,13 +72,25 @@ namespace Data.Migrations
                 nullable: false,
                 defaultValue: 0m);
 
+            migrationBuilder.AlterColumn<decimal>(
+                name: "Subtotal",
+                table: "OrderDetails",
+                type: "decimal(18,2)",
+                nullable: false,
+                oldClrType: typeof(int),
+                oldType: "int");
+
             migrationBuilder.CreateTable(
                 name: "Categories",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                    Nombre = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Estado = table.Column<bool>(type: "bit", nullable: false),
+                    EdadesAplicables = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    TiposEvento = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -117,25 +157,32 @@ namespace Data.Migrations
                 table: "Products");
 
             migrationBuilder.DropColumn(
-                name: "Stock",
+                name: "CategoryId",
                 table: "Products");
 
-            migrationBuilder.RenameColumn(
+            migrationBuilder.DropColumn(
+                name: "Descripcion",
+                table: "Products");
+
+            migrationBuilder.DropColumn(
+                name: "Imagen",
+                table: "Products");
+
+            migrationBuilder.DropColumn(
                 name: "IsActive",
-                table: "Products",
-                newName: "IsAviable");
+                table: "Products");
 
-            migrationBuilder.RenameColumn(
-                name: "CategoryId",
-                table: "Products",
-                newName: "CantidadVenta");
+            migrationBuilder.DropColumn(
+                name: "Nombre",
+                table: "Products");
 
-            migrationBuilder.AddColumn<string>(
-                name: "Categoria",
-                table: "Products",
-                type: "nvarchar(max)",
-                nullable: false,
-                defaultValue: "");
+            migrationBuilder.DropColumn(
+                name: "Precio",
+                table: "Products");
+
+            migrationBuilder.DropColumn(
+                name: "Stock",
+                table: "Products");
 
             migrationBuilder.AddColumn<int>(
                 name: "UserId",
@@ -143,6 +190,14 @@ namespace Data.Migrations
                 type: "int",
                 nullable: false,
                 defaultValue: 0);
+
+            migrationBuilder.AlterColumn<int>(
+                name: "Subtotal",
+                table: "OrderDetails",
+                type: "int",
+                nullable: false,
+                oldClrType: typeof(decimal),
+                oldType: "decimal(18,2)");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Orders_UserId",
