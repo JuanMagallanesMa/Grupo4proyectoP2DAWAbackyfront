@@ -135,31 +135,24 @@ namespace apiPartyStore.Controllers
             return NoContent();
         }
         //buscar con usuario o id de orden
+        
         [HttpGet("search")]
-        public async Task<ActionResult<IEnumerable<Order>>> SearchOrders(string? userName, int? idOrder )
+        public async Task<ActionResult<IEnumerable<Order>>> SearchOrders(string? cedula)
         {
-            var ordersQuery = _context.Orders
-                .Where(o => o.isActive)
-                .AsQueryable();
+            var orders = await _context.Orders
+                .Where(o => o.isActive &&
+                            (string.IsNullOrEmpty(cedula) || o.Cedula.Contains(cedula)))
+                .ToListAsync();
 
-
-            if (!string.IsNullOrEmpty(userName))
-            {
-                ordersQuery = ordersQuery.Where(o => o.Name.Contains(userName));
-            }
-
-            if (idOrder > 0)
-            {
-                ordersQuery = ordersQuery.Where(o => o.Id==idOrder);
-            }
-
-            var orders = await ordersQuery.ToListAsync();
             if (!orders.Any())
             {
                 return NotFound("No se encontraron Ordenes con esos criterios");
             }
+
             return Ok(orders);
         }
+
+
 
 
 
