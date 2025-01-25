@@ -22,8 +22,8 @@ namespace Data.Contexts
         public DbSet<Promociones> Promotions { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //optionsBuilder.UseSqlServer("Server=localhost;Database=PruebaDB3Party;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
-            optionsBuilder.UseSqlServer("Server=DAXENIL-PC\\SQLEXPRESS;Database=Prueba1DB3Party;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=localhost;Database=PruebaDB3Party;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
+            //optionsBuilder.UseSqlServer("Server=DAXENIL-PC\\SQLEXPRESS;Database=Prueba1DB3Party;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True;");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
