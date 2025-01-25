@@ -106,8 +106,8 @@ namespace Data.Migrations
                     Nombre = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Descripcion = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Id_categoria = table.Column<int>(type: "int", nullable: true),
-                    Descuento_porcentaje = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
-                    Fecha_fin = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DescuentoPorcentaje = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    FechaFin = table.Column<DateTime>(type: "datetime2", nullable: false),
                     IsActive = table.Column<bool>(type: "bit", nullable: false)
                 },
                 constraints: table =>

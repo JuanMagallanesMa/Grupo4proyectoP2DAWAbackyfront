@@ -25,7 +25,9 @@ namespace apiPartyStore.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Promociones>>> GetPromotions()
         {
-            return await _context.Promotions.ToListAsync();
+            return await _context.Promotions
+               .Where(od => od.IsActive)
+               .ToListAsync();
         }
 
         // GET: api/Promociones/5
