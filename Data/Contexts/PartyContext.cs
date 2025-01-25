@@ -10,8 +10,8 @@ namespace Data.Contexts
 {
     public class PartyContext : DbContext
     {
-       // public PartyContext(DbContextOptions<PartyContext> options) : base(options)
-        //{ }
+        public PartyContext(DbContextOptions<PartyContext> options) : base(options)
+        { }
 
         //Agregar las clases para la BD
         public DbSet<Order> Orders { get; set; }
@@ -23,7 +23,7 @@ namespace Data.Contexts
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             //optionsBuilder.UseSqlServer("Server=localhost;Database=PruebaDB3Party;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True");
-            optionsBuilder.UseSqlServer("Server=DAXENIL-PC\\SQLEXPRESS;Database=PruebaDB3Party;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True;");
+            optionsBuilder.UseSqlServer("Server=DAXENIL-PC\\SQLEXPRESS;Database=Prueba1DB3Party;Trusted_Connection=True;MultipleActiveResultSets=True;TrustServerCertificate=True;");
 
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
