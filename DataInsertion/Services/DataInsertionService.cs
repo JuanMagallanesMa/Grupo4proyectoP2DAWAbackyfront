@@ -8,5 +8,6 @@ namespace DataInsertion.Services
 {
     internal class DataInsertionService
     {
+        
     }
 }
