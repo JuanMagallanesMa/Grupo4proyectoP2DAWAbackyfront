@@ -12,13 +12,13 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(PartyContext))]
-<<<<<<<< HEAD:Data/Migrations/20250120040156_VerSolucionErrores.Designer.cs
-    [Migration("20250120040156_VerSolucionErrores")]
-    partial class VerSolucionErrores
-========
+
+    [Migration("20250120040156_VerSolucionErrores")];
+    partial class VerSolucionErrores 
+
     [Migration("20250120171515_mi1e")]
     partial class mi1e
->>>>>>>> da8f468c989080898ba38558036ec48d9289422b:Data/Migrations/20250120171515_mi1e.Designer.cs
+
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

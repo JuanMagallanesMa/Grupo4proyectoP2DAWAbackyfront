@@ -12,13 +12,12 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(PartyContext))]
-<<<<<<<< HEAD:Data/Migrations/20250116012553_Productp.Designer.cs
+
     [Migration("20250116012553_Productp")]
-    partial class Productp
-========
+    partial class Producto { 
+
     [Migration("20250120040156_VerSolucionErrores")]
     partial class VerSolucionErrores
->>>>>>>> da8f468c989080898ba38558036ec48d9289422b:Data/Migrations/20250120040156_VerSolucionErrores.Designer.cs
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -284,4 +283,5 @@ namespace Data.Migrations
 #pragma warning restore 612, 618
         }
     }
+}
 }
