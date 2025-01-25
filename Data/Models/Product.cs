@@ -11,19 +11,21 @@ namespace Data.Models
     public class Product
     {
         public int Id { get; set; }
-        public string Nombre { get; set; } = string.Empty;
-        public string Descripcion { get; set; } = string.Empty;
-        public decimal Precio { get; set; }
 
-        [Column("Imagen")]
-        public string Imagen { get; set; } = string.Empty;
+        public string Nombre { get; set; }
+        public string Descripcion { get; set; }
+
+      
+        public decimal Precio { get; set; }
+        public string Imagen { get; set; } 
 
         public int CategoryId { get; set; }
         public bool IsActive { get; set; }
+       
         public virtual Category Category { get; set; } = null!;
         public decimal Stock { get; set; }
         
         [JsonIgnore]
-        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = null!;
+        public virtual ICollection<OrderDetail> OrderDetails { get; set; } = new List<OrderDetail>();
     }
 }

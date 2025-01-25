@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Data.Models
@@ -13,7 +14,8 @@ namespace Data.Models
         public string? Descripcion { get; set; }
 
         public int? Id_categoria { get; set; }
-        public Category? Categoria { get; set; } // Navegación a la entidad Categoria
+        
+        public virtual Category? Categoria { get; set; } = null!; // Navegación a la entidad Categoria
        
         public decimal DescuentoPorcentaje { get; set; }
         

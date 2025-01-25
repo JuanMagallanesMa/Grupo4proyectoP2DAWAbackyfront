@@ -28,7 +28,8 @@ namespace apiPartyStore.Controllers
         public async Task<ActionResult<IEnumerable<OrderDetail>>> GetOrderDetails()
         {
             return await _context.OrderDetails
-                .Include(od=>od.Order.Name)
+                .Include(od=>od.Order)
+                .Include(od => od.Product)
                 .Where(od => od.isActive)
                 .ToListAsync();
         }
@@ -138,5 +139,26 @@ namespace apiPartyStore.Controllers
         {
             return _context.OrderDetails.Any(e => e.Id == id);
         }
+
+        [HttpGet("ObtenerOrder/{orderId}")]
+        public async Task<ActionResult<IEnumerable<OrderDetail>>> GetOrderDetails(int orderId)
+        {
+            // Filtrar los OrderDetails por el OrderId proporcionado y solo los que están activos
+            var orderDetails = await _context.OrderDetails
+                .Include(od => od.Order) // Incluye los datos relacionados con Order
+                .Include(od=> od.Product) //Incluye los datos relacionados con Product
+                .Where(od => od.OrderId == orderId && od.isActive) // Filtro por OrderId y estado activo
+                .ToListAsync();
+
+            if (!orderDetails.Any())
+            {
+                // Retorna un 404 si no se encuentran resultados para el OrderId
+                return NotFound($"No se encontraron detalles para el OrderId {orderId}.");
+            }
+
+            return orderDetails;
+        }
+
+
     }
 }

@@ -11,8 +11,11 @@ namespace Data.Models
     {
         public int Id { get; set; }
         public string Nombre { get; set; } = string.Empty;
+        public string Descripcion { get; set; } = string.Empty;
+        public bool Estado { get; set; } // true = activo, false = inactivo
+        public List<string> EdadesAplicables { get; set; } = new List<string>();
+        public List<string> TiposEvento { get; set; } = new List<string>();
 
-       
         [JsonIgnore]
         public virtual ICollection<Product> Products { get; set; } = new List<Product>();
         [JsonIgnore]
