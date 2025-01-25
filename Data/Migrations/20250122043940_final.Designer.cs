@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(PartyContext))]
-
-    [Migration("20250120040156_VerSolucionErrores")];
-    partial class VerSolucionErrores 
-
-    [Migration("20250120171515_mi1e")]
-    partial class mi1e
-
+    [Migration("20250122043940_final")]
+    partial class final
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,7 +37,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("EdadesAplicables")
+                    b.PrimitiveCollection<string>("EdadesAplicables")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -53,7 +48,7 @@ namespace Data.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("TiposEvento")
+                    b.PrimitiveCollection<string>("TiposEvento")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

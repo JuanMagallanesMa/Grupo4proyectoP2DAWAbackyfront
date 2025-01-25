@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Data.Contexts;
 using Data.Models;
 
-namespace apiPartyStore.Controllers
+namespace ApiPartyStore.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -25,7 +25,9 @@ namespace apiPartyStore.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Category>>> GetCategories()
         {
-            return await _context.Categories.ToListAsync();
+            return await _context.Categories
+                .Where(c => c.Estado) 
+                .ToListAsync();
         }
 
         // GET: api/Categories/5
@@ -42,8 +44,6 @@ namespace apiPartyStore.Controllers
             return category;
         }
 
-        // PUT: api/Categories/5
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
         public async Task<IActionResult> PutCategory(int id, Category category)
         {
@@ -52,6 +52,7 @@ namespace apiPartyStore.Controllers
                 return BadRequest();
             }
 
+            // No necesitas asignar el Id manualmente, solo actualizar los campos necesarios
             _context.Entry(category).State = EntityState.Modified;
 
             try
@@ -73,16 +74,35 @@ namespace apiPartyStore.Controllers
             return NoContent();
         }
 
-        // POST: api/Categories
-        // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
-        [HttpPost]
-        public async Task<ActionResult<Category>> PostCategory(Category category)
-        {
-            _context.Categories.Add(category);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetCategory", new { id = category.Id }, category);
-        }
+        [HttpPost]
+[HttpPost]
+public async Task<IActionResult> CrearCategoria([FromBody] Category categoriaRequest)
+{
+    if (categoriaRequest == null)
+    {
+        return BadRequest();
+    }
+
+    // No asignamos el 'id' manualmente, EF lo asignará automáticamente
+    var categoria = new Category
+    {
+        Nombre = categoriaRequest.Nombre,
+        Descripcion = categoriaRequest.Descripcion,
+        Estado = categoriaRequest.Estado,
+        EdadesAplicables = categoriaRequest.EdadesAplicables,
+        TiposEvento = categoriaRequest.TiposEvento
+    };
+
+    _context.Categories.Add(categoria);
+    await _context.SaveChangesAsync();
+
+    return CreatedAtAction(nameof(GetCategories), new { id = categoria.Id }, categoria);
+}
+
+
+
+
 
         // DELETE: api/Categories/5
         [HttpDelete("{id}")]
@@ -98,6 +118,78 @@ namespace apiPartyStore.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        // PUT: api/Categories/deactivate/5
+        [HttpPut("deactivate/{id}")]
+        public async Task<IActionResult> DeactivateCategory(int id)
+        {
+            var category = await _context.Categories.FindAsync(id);
+            if (category == null)
+            {
+                return NotFound("Categoría no encontrada para desactivar.");
+            }
+
+            // Desactivación lógica
+            category.Estado = false;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                if (!CategoryExists(id))
+                {
+                    return NotFound();
+                }
+                else
+                {
+                    throw;
+                }
+            }
+
+            return NoContent();
+        }
+
+        // GET: api/Categories/search
+        [HttpGet("search")]
+        public async Task<ActionResult<IEnumerable<Category>>> SearchCategories(string? nombre, bool? estado)
+        {
+            var categoriesQuery = _context.Categories.AsQueryable();
+
+            if (!string.IsNullOrEmpty(nombre))
+            {
+                categoriesQuery = categoriesQuery.Where(c => c.Nombre.Contains(nombre));
+            }
+
+            if (estado.HasValue)
+            {
+                categoriesQuery = categoriesQuery.Where(c => c.Estado == estado.Value);
+            }
+
+            var categories = await categoriesQuery.ToListAsync();
+
+            if (!categories.Any())
+            {
+                return NotFound("No se encontraron categorías con los criterios especificados.");
+            }
+
+            return Ok(categories);
+        }
+
+        // GET: api/Categories/names
+        [HttpGet("names")]
+        public async Task<ActionResult<IEnumerable<object>>> GetCategoryNames()
+        {
+            return await _context.Categories
+                .Where(c => c.Estado) // Solo categorías activas
+                .Select(c => new
+                {
+                    c.Id,
+                    c.Nombre
+                })
+                .ToListAsync();
         }
 
         private bool CategoryExists(int id)

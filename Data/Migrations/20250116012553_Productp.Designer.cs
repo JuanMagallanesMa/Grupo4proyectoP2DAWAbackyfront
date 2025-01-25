@@ -13,12 +13,11 @@ namespace Data.Migrations
 {
     [DbContext(typeof(PartyContext))]
 
-    [Migration("20250120040156_VerSolucionErrores")];
-    partial class VerSolucionErrores 
+    [Migration("20250116012553_Productp")]
+    partial class Producto { 
 
-    [Migration("20250120171515_mi1e")]
-    partial class mi1e
-
+    [Migration("20250120040156_VerSolucionErrores")]
+    partial class VerSolucionErrores
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,22 +37,7 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("Descripcion")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("EdadesAplicables")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("Estado")
-                        .HasColumnType("bit");
-
                     b.Property<string>("Nombre")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("TiposEvento")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
@@ -299,4 +283,5 @@ namespace Data.Migrations
 #pragma warning restore 612, 618
         }
     }
+}
 }

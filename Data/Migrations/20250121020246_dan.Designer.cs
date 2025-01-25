@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(PartyContext))]
-
-    [Migration("20250120040156_VerSolucionErrores")];
-    partial class VerSolucionErrores 
-
-    [Migration("20250120171515_mi1e")]
-    partial class mi1e
-
+    [Migration("20250121020246_dan")]
+    partial class dan
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

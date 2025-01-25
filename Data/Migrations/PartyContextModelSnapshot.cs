@@ -30,7 +30,22 @@ namespace Data.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<string>("Descripcion")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.PrimitiveCollection<string>("EdadesAplicables")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("Estado")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Nombre")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.PrimitiveCollection<string>("TiposEvento")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 

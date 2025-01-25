@@ -12,13 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Data.Migrations
 {
     [DbContext(typeof(PartyContext))]
-
-    [Migration("20250120040156_VerSolucionErrores")];
-    partial class VerSolucionErrores 
-
     [Migration("20250120171515_mi1e")]
     partial class mi1e
-
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -118,8 +113,8 @@ namespace Data.Migrations
                     b.Property<int>("ProductId")
                         .HasColumnType("int");
 
-                    b.Property<decimal>("Subtotal")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<int>("Subtotal")
+                        .HasColumnType("int");
 
                     b.Property<bool>("isActive")
                         .HasColumnType("bit");
