@@ -13,8 +13,8 @@ namespace Data.Migrations
 {
     [DbContext(typeof(PartyContext))]
 
-    [Migration("20250120040156_VerSolucionErrores")];
-    partial class VerSolucionErrores 
+    [Migration("20250120040156_VerSolucionErrores")]
+    partial class VerSolucionErrores { } 
 
     [Migration("20250120171515_mi1e")]
     partial class mi1e
