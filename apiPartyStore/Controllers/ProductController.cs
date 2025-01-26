@@ -10,7 +10,7 @@ using Data.Models;
 
 namespace apiPartyStore.Controllers
 {
-    //http://localhost:4200/api/Product
+    
     [Route("api/[controller]")]
     [ApiController]
     public class ProductController : ControllerBase
